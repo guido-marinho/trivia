@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { fecthToken } from '../tests/helpers/fetchApi';
 
 export default class Login extends Component {
@@ -14,9 +15,8 @@ export default class Login extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { history } = this.props;
-    const test = await fecthToken();
-    console.log(test);
-
+    const response = await fecthToken();
+    localStorage.setItem('token', response.token);
     history.push('/game');
   };
 
@@ -62,3 +62,9 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
