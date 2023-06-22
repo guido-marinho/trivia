@@ -29,36 +29,45 @@ export default class Login extends Component {
 
   render() {
     const { name, email } = this.state;
+    const { history } = this.props;
     return (
-      <form>
-        <label htmlFor="name">
-          <input
-            type="text"
-            value={ name }
-            name="name"
-            id="name"
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="email">
-          <input
-            type="text"
-            value={ email }
-            name="email"
-            id="email"
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-          />
-        </label>
+      <div>
+        <form>
+          <label htmlFor="name">
+            <input
+              type="text"
+              value={ name }
+              name="name"
+              id="name"
+              data-testid="input-player-name"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="email">
+            <input
+              type="text"
+              value={ email }
+              name="email"
+              id="email"
+              data-testid="input-gravatar-email"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button
+            data-testid="btn-play"
+            disabled={ this.isDisable() }
+            onClick={ this.handleSubmit }
+          >
+            Play
+          </button>
+        </form>
         <button
-          data-testid="btn-play"
-          disabled={ this.isDisable() }
-          onClick={ this.handleSubmit }
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
         >
-          Play
+          Settings
         </button>
-      </form>
+      </div>
     );
   }
 }
