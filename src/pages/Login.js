@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { fecthToken } from '../tests/helpers/fetchApi';
 
 export default class Login extends Component {
   state = {
@@ -8,6 +9,15 @@ export default class Login extends Component {
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
+  };
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const { history } = this.props;
+    const test = await fecthToken();
+    console.log(test);
+
+    history.push('/game');
   };
 
   isDisable = () => {
@@ -44,6 +54,7 @@ export default class Login extends Component {
         <button
           data-testid="btn-play"
           disabled={ this.isDisable() }
+          onClick={ this.handleSubmit }
         >
           Play
         </button>

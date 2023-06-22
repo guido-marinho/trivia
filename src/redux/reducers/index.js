@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import { tokenRequest } from '../actions';
 
 const rootReducer = combineReducers({
-  // reducer1,
+  tokenRequest,
   // reducer2,
 });
 
