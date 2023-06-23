@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getEmail, getName } from '../redux/actions';
 import { fecthToken } from '../tests/helpers/fetchApi';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     name: '',
     email: '',
@@ -14,10 +16,13 @@ export default class Login extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { history } = this.props;
+    const { name, email } = this.state;
+    const { history, dispatch } = this.props;
     const response = await fecthToken();
     localStorage.setItem('token', response.token);
     history.push('/game');
+    dispatch(getName(name));
+    dispatch(getEmail(email));
   };
 
   isDisable = () => {
@@ -76,4 +81,12 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  name: state.user.name,
+});
+
+export default connect(mapStateToProps)(Login);
