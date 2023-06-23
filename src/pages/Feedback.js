@@ -5,9 +5,7 @@ class Feedback extends Component {
   render() {
     return (
       <div>
-        <header>
-          <Header />
-        </header>
+        <Header />
       </div>
     );
   }
