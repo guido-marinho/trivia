@@ -10,6 +10,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Header from '../components/Header';
+import '../css/Game.css';
 import { fetchAnswers } from '../tests/helpers/fetchApi';
 
 class Game extends React.Component {
@@ -38,9 +39,9 @@ class Game extends React.Component {
 
   // faz a requisição das perguntas e respostas e atualiza o estado com os dados
   handleRequest = async () => {
-    const a = await fetchAnswers();
+    const response = await fetchAnswers();
     this.setState({
-      data: a,
+      data: response,
     });
   };
 
@@ -88,6 +89,7 @@ class Game extends React.Component {
                 <div data-testid="answer-options">
                   { this.answers().map((answer, curr) => (
                     <button
+                      type="button"
                       key={ curr }
                       data-testid={ answer === results[index]?.correct_answer
                         ? 'correct-answer' : `wrong-answer-${curr}` }
