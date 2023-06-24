@@ -10,11 +10,11 @@ class Header extends Component {
     const URL_ICON = `https://www.gravatar.com/avatar/${hash}`;
 
     return (
-      <div>
+      <header>
         <img src={ URL_ICON } alt="icon" data-testid="header-profile-picture" />
         <p data-testid="header-player-name">{ name }</p>
         <p data-testid="header-score">0</p>
-      </div>
+      </header>
     );
   }
 }

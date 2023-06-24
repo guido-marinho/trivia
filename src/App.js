@@ -3,21 +3,18 @@ import React from 'react';
 import './App.css';
 // import { render } from '@testing-library/react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
+import Feedback from './pages/Feedback';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
 import Game from './pages/Game';
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route path="/game" component={ Game } />
-        <Route path="/settings" component={ Settings } />
-      </Switch>
-    </>
+    <Switch>
+      <Route path="/" component={ Login } exact />
+      <Route path="/settings" component={ Settings } />
+      <Route path="/feedback" component={ Feedback } />
+    </Switch>
   /* <div className="App">
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />

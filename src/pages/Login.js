@@ -18,9 +18,12 @@ class Login extends Component {
     event.preventDefault();
     const { name, email } = this.state;
     const { history, dispatch } = this.props;
+
     const response = await fecthToken();
     localStorage.setItem('token', response.token);
+
     history.push('/game');
+
     dispatch(getName(name));
     dispatch(getEmail(email));
   };
