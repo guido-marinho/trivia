@@ -27,14 +27,15 @@ class Game extends React.Component {
 
     const oneThousand = 1000;
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       const { time } = this.state;
       if (time > 0) {
         this.setState((prevState) => ({
           time: prevState.time - 1,
         }));
       }
-      if (time <= 0) {
+      if (time === 0) {
+        clearInterval(interval);
         this.setState({
           disabled: true,
           time: 'Tempo esgotado',
