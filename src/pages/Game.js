@@ -17,11 +17,30 @@ class Game extends React.Component {
   state = {
     data: {},
     index: 0,
+    time: 30,
+    disabled: false,
   };
 
   // faz a requisição das perguntas e respostas ao carregar a pagina
   async componentDidMount() {
     await this.handleRequest();
+
+    const oneThousand = 1000;
+
+    setInterval(() => {
+      const { time } = this.state;
+      if (time > 0) {
+        this.setState((prevState) => ({
+          time: prevState.time - 1,
+        }));
+      }
+      if (time <= 0) {
+        this.setState({
+          disabled: true,
+          time: 'Tempo esgotado',
+        });
+      }
+    }, oneThousand);
   }
 
   // verifica se o token expirou e atualiza o estado com o novo token
@@ -73,7 +92,7 @@ class Game extends React.Component {
   };
 
   render() {
-    const { data, index } = this.state;
+    const { data, index, time, disabled } = this.state;
     const { results } = data;
     return (
       <div>
@@ -84,6 +103,7 @@ class Game extends React.Component {
                 <Header />
               </header>
               <main>
+                <span>{ time }</span>
                 <h2 data-testid="question-category">{ results[index]?.category }</h2>
                 <h3 data-testid="question-text">{ results[index]?.question }</h3>
                 <div data-testid="answer-options">
@@ -91,6 +111,7 @@ class Game extends React.Component {
                     <button
                       type="button"
                       key={ curr }
+                      disabled={ disabled }
                       data-testid={ answer === results[index]?.correct_answer
                         ? 'correct-answer' : `wrong-answer-${curr}` }
                       className={ answer === results[index]?.correct_answer

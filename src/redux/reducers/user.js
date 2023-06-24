@@ -1,6 +1,8 @@
 const initialState = {
   name: '',
   email: '',
+  score: 0,
+  assertions: 0,
 };
 
 // reducer para salvar o nome e o email no estado global

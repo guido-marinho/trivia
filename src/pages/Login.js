@@ -52,6 +52,7 @@ class Login extends Component {
               id="name"
               data-testid="input-player-name"
               onChange={ this.handleChange }
+              placeholder="Digite seu nome"
             />
           </label>
           <label htmlFor="email">
@@ -62,6 +63,7 @@ class Login extends Component {
               id="email"
               data-testid="input-gravatar-email"
               onChange={ this.handleChange }
+              placeholder="Digite seu email"
             />
           </label>
           <button
