@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import Feedback from './pages/Feedback';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import Game from './pages/Game';
 
 export default function App() {
   return (
