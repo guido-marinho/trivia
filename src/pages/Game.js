@@ -7,10 +7,10 @@
     api das perguntas https://opentdb.com/api.php?amount=5&token=${seu-token-aqui}
 */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import Header from '../components/Header';
-import { handleApi } from '../tests/helpers/fetchApi';
+import { fetchAnswers } from '../tests/helpers/fetchApi';
 
 class Game extends React.Component {
   state = {
@@ -18,53 +18,58 @@ class Game extends React.Component {
     index: 0,
   };
 
+  // faz a requisição das perguntas e respostas ao carregar a pagina
   async componentDidMount() {
-    await this.co();
+    await this.handleRequest();
   }
 
+  // verifica se o token expirou e atualiza o estado com o novo token
   componentDidUpdate() {
     const { history } = this.props;
     const { data } = this.state;
+
     const three = 3;
+
     if (data.response_code === three) {
       localStorage.removeItem('token');
       history.push('/');
     }
   }
 
-  co = async () => {
-    const a = await handleApi();
+  // faz a requisição das perguntas e respostas e atualiza o estado com os dados
+  handleRequest = async () => {
+    const a = await fetchAnswers();
     this.setState({
       data: a,
     });
   };
 
-  shuffleArray = (arr) => {
+  // embaralha as respostas
+  shuffleArray = (array) => {
     // Loop em todos os elementos
-    for (let i = arr.length - 1; i > 0; i -= 1) {
+    for (let index = array.length - 1; index > 0; index -= 1) {
       // Escolhendo elemento aleatório
-      const j = Math.floor(Math.random() * (i + 1));
+      const shuffle = Math.floor(Math.random() * (index + 1));
       // Reposicionando elemento
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      [array[index], array[shuffle]] = [array[shuffle], array[index]];
     }
     // Retornando array com aleatoriedade
-    return arr;
+    return array;
   };
 
+  // retorna um array com as respostas embaralhadas
   answers = () => {
     const { data, index } = this.state;
     const { results } = data;
-    if (results.length > 0) {
-      const answers = results[index]?.incorrect_answers;
-      const correct = results[index]?.correct_answer;
-      const allAnswers = [...answers, correct];
+    if (results.length) {
+      const wrongAnswers = results[index]?.incorrect_answers;
+      const correctAnswers = results[index]?.correct_answer;
+      const allAnswers = [...wrongAnswers, correctAnswers];
       const shuffle = this.shuffleArray(allAnswers);
       return shuffle;
     }
     return [];
   };
-
-  // caso o token tenha expirado atualiza o localStorage com novo token e faz a requisição novamente
 
   render() {
     const { data, index } = this.state;
@@ -77,22 +82,23 @@ class Game extends React.Component {
               <header>
                 <Header />
               </header>
-              <h1 data-testid="settings-title">Game</h1>
-              <h2 data-testid="question-category">{ results[index]?.category }</h2>
-              <h3 data-testid="question-text">{ results[index]?.question }</h3>
-              <div data-testid="answer-options">
-                { this.answers().map((answer, i) => (
-                  <button
-                    key={ i }
-                    data-testid={ answer === results[index]?.correct_answer
-                      ? 'correct-answer' : `wrong-answer-${i}` }
-                    className={ answer === results[index]?.correct_answer
-                      ? 'correct' : 'wrong' }
-                  >
-                    { answer }
-                  </button>
-                ))}
-              </div>
+              <main>
+                <h2 data-testid="question-category">{ results[index]?.category }</h2>
+                <h3 data-testid="question-text">{ results[index]?.question }</h3>
+                <div data-testid="answer-options">
+                  { this.answers().map((answer, curr) => (
+                    <button
+                      key={ curr }
+                      data-testid={ answer === results[index]?.correct_answer
+                        ? 'correct-answer' : `wrong-answer-${curr}` }
+                      className={ answer === results[index]?.correct_answer
+                        ? 'correct' : 'wrong' }
+                    >
+                      { answer }
+                    </button>
+                  ))}
+                </div>
+              </main>
             </div>
           )}
       </div>
