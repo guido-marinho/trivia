@@ -10,10 +10,12 @@ class Login extends Component {
     email: '',
   };
 
+  // função que atualiza o estado com o valor do input
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
   };
 
+  // função que salva o nome e email no localStorage e redireciona para a pagina de jogo
   handleSubmit = async (event) => {
     event.preventDefault();
     const { name, email } = this.state;
@@ -28,6 +30,7 @@ class Login extends Component {
     dispatch(getEmail(email));
   };
 
+  // função que verifica se o botão deve estar habilitado ou não
   isDisable = () => {
     const { email, name } = this.state;
     const regex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i;

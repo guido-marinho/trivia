@@ -3,6 +3,7 @@ const initialState = {
   email: '',
 };
 
+// reducer para salvar o nome e o email no estado global
 export const user = (state = initialState, action) => {
   switch (action.type) {
   case 'GET_NAME':
