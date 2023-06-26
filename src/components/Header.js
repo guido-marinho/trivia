@@ -25,9 +25,9 @@ Header.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
-  name: state.user.name,
-  score: state.user.score,
+  email: state.player.email,
+  name: state.player.name,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Header);

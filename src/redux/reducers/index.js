@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { tokenRequest } from '../actions';
-import { user } from './user';
+import { player } from './player';
 
 const rootReducer = combineReducers({
   tokenRequest,
-  user,
+  player,
 });
 
 export default rootReducer;
