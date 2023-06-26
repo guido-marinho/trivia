@@ -5,6 +5,11 @@ import Header from '../components/Header';
 import { calculateAssertions } from '../tests/helpers/calculateAssertions';
 
 class Feedback extends Component {
+  handleClick = () => {
+    const { history } = this.props;
+    history.push('/game');
+  };
+
   render() {
     const { assertions, score } = this.props;
     return (
@@ -15,6 +20,13 @@ class Feedback extends Component {
           <p data-testid="feedback-total-question">{ assertions }</p>
           <p data-testid="feedback-total-score">{ score }</p>
         </div>
+        <button
+          data-testid="btn-play-again"
+          onClick={ this.handleClick }
+        >
+          Play Again
+
+        </button>
       </div>
     );
   }
@@ -23,6 +35,9 @@ class Feedback extends Component {
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
