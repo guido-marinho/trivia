@@ -60,6 +60,7 @@ class Game extends React.Component {
       disabled: true,
       isAnswered: true,
     });
+    clearInterval(this.interval);
   };
 
   // função para o botão de proxima pergunta
@@ -77,7 +78,7 @@ class Game extends React.Component {
   timeOut = () => {
     const oneThousand = 1000;
 
-    const interval = setInterval(() => {
+    this.interval = setInterval(() => {
       const { time } = this.state;
       if (time > 0) {
         this.setState((prevState) => ({
@@ -85,7 +86,7 @@ class Game extends React.Component {
         }));
       }
       if (time === 0) {
-        clearInterval(interval);
+        clearInterval(this.interval);
         this.setState({
           disabled: true,
           time: 'Tempo esgotado',

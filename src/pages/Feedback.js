@@ -5,6 +5,26 @@ import Header from '../components/Header';
 import { calculateAssertions } from '../helpers/calculateAssertions';
 
 class Feedback extends Component {
+  componentDidMount() {
+    this.getRanking();
+  }
+
+  getRanking = () => {
+    const { name, score, email } = this.props;
+
+    const newPlayer = {
+      name,
+      score,
+      email,
+    };
+
+    const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+    const newRanking = [...ranking, newPlayer];
+    const sortRanking = newRanking.sort((a, b) => b.score - a.score);
+
+    localStorage.setItem('ranking', JSON.stringify(sortRanking));
+  };
+
   handleClick = () => {
     const { history } = this.props;
     history.push('/');
@@ -44,11 +64,15 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
+  name: state.player.name,
+  email: state.player.email,
 });
 
 export default connect(mapStateToProps)(Feedback);
