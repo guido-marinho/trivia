@@ -7,10 +7,10 @@ import Header from '../components/Header';
 
 import '../css/Game.css';
 
+import { calculateScore } from '../helpers/calculateScore';
+import { fetchAnswers } from '../helpers/fetchApi';
+import { shuffleArray } from '../helpers/shuffleArray';
 import { getScore } from '../redux/actions';
-import { calculateScore } from '../tests/helpers/calculateScore';
-import { fetchAnswers } from '../tests/helpers/fetchApi';
-import { shuffleArray } from '../tests/helpers/shuffleArray';
 
 class Game extends React.Component {
   state = {

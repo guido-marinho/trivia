@@ -3,7 +3,7 @@
 export const calculateAssertions = (assertions) => {
   const magicNumber = 3;
   if (assertions >= magicNumber) {
-    return 'Well Done!'
+    return 'Well Done!';
   }
   return 'Could be better...';
-}
+};
