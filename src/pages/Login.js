@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fecthToken } from '../helpers/fetchApi';
 import { getEmail, getName } from '../redux/actions';
-import { fecthToken } from '../tests/helpers/fetchApi';
 
 class Login extends Component {
   state = {
