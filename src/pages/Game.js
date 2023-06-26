@@ -19,42 +19,16 @@ class Game extends React.Component {
     index: 0,
     time: 30,
     disabled: false,
+    shuffle: [],
   };
 
-  // faz a requisição das perguntas e respostas ao carregar a pagina
   async componentDidMount() {
     await this.handleRequest();
-
-    const oneThousand = 1000;
-
-    const interval = setInterval(() => {
-      const { time } = this.state;
-      if (time > 0) {
-        this.setState((prevState) => ({
-          time: prevState.time - 1,
-        }));
-      }
-      if (time === 0) {
-        clearInterval(interval);
-        this.setState({
-          disabled: true,
-          time: 'Tempo esgotado',
-        });
-      }
-    }, oneThousand);
+    this.timeOut();
   }
 
-  // verifica se o token expirou e atualiza o estado com o novo token
   componentDidUpdate() {
-    const { history } = this.props;
-    const { data } = this.state;
-
-    const three = 3;
-
-    if (data.response_code === three) {
-      localStorage.removeItem('token');
-      history.push('/');
-    }
+    this.verifyToken();
   }
 
   // faz a requisição das perguntas e respostas e atualiza o estado com os dados
@@ -62,7 +36,7 @@ class Game extends React.Component {
     const response = await fetchAnswers();
     this.setState({
       data: response,
-    });
+    }, () => this.answers());
   };
 
   // embaralha as respostas
@@ -87,13 +61,49 @@ class Game extends React.Component {
       const correctAnswers = results[index]?.correct_answer;
       const allAnswers = [...wrongAnswers, correctAnswers];
       const shuffle = this.shuffleArray(allAnswers);
-      return shuffle;
+      this.setState({
+        shuffle,
+      });
     }
     return [];
   };
 
+  // https://stackoverflow.com/questions/30427882/make-a-timer-using-setinterval link usado para fazer o timer
+  timeOut = () => {
+    const oneThousand = 1000;
+
+    const interval = setInterval(() => {
+      const { time } = this.state;
+      if (time > 0) {
+        this.setState((prevState) => ({
+          time: prevState.time - 1,
+        }));
+      }
+      if (time === 0) {
+        clearInterval(interval);
+        this.setState({
+          disabled: true,
+          time: 'Tempo esgotado',
+        });
+      }
+    }, oneThousand);
+  };
+
+  // verifica se o token expirou e redireciona para a pagina de login caso tenha expirado
+  verifyToken = () => {
+    const { history } = this.props;
+    const { data } = this.state;
+
+    const three = 3;
+
+    if (data.response_code === three) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
+  };
+
   render() {
-    const { data, index, time, disabled } = this.state;
+    const { data, index, time, disabled, shuffle } = this.state;
     const { results } = data;
     return (
       <div>
@@ -108,7 +118,7 @@ class Game extends React.Component {
                 <h2 data-testid="question-category">{ results[index]?.category }</h2>
                 <h3 data-testid="question-text">{ results[index]?.question }</h3>
                 <div data-testid="answer-options">
-                  { this.answers().map((answer, curr) => (
+                  { shuffle.map((answer, curr) => (
                     <button
                       type="button"
                       key={ curr }
