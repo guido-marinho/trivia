@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import { connect } from 'react-redux';
+
 import Header from '../components/Header';
+
 import '../css/Game.css';
+
 import { getScore } from '../redux/actions';
 import { calculateScore } from '../tests/helpers/calculateScore';
 import { fetchAnswers } from '../tests/helpers/fetchApi';
+import { shuffleArray } from '../tests/helpers/shuffleArray';
 
 class Game extends React.Component {
   state = {
@@ -15,7 +20,6 @@ class Game extends React.Component {
     disabled: false,
     shuffle: [],
     isAnswered: false,
-
   };
 
   async componentDidMount() {
@@ -27,12 +31,46 @@ class Game extends React.Component {
     this.verifyToken();
   }
 
+  // verifica se o token expirou e redireciona para a pagina de login caso tenha expirado
+  verifyToken = () => {
+    const { history } = this.props;
+    const { data } = this.state;
+
+    const three = 3;
+
+    if (data.response_code === three) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
+  };
+
   // faz a requisição das perguntas e respostas e atualiza o estado com os dados
   handleRequest = async () => {
     const response = await fetchAnswers();
     this.setState({
       data: response,
     }, () => this.answers());
+  };
+
+  // função  para evento de click nos botões de resposta
+  handleCLick = ({ target }) => {
+    this.score(target);
+
+    this.setState({
+      disabled: true,
+      isAnswered: true,
+    });
+  };
+
+  // função para o botão de proxima pergunta
+  handleNextQuestion = () => {
+    this.setState((prevState) => ({
+      index: prevState.index + 1,
+      time: 30,
+      disabled: false,
+    }), () => this.answers());
+
+    this.timeOut();
   };
 
   // https://stackoverflow.com/questions/30427882/make-a-timer-using-setinterval link usado para fazer o timer
@@ -56,28 +94,6 @@ class Game extends React.Component {
     }, oneThousand);
   };
 
-  handleCLick = ({ target }) => {
-    this.score(target);
-
-    this.setState({
-      disabled: true,
-      isAnswered: true,
-    });
-  };
-
-  // embaralha as respostas
-  shuffleArray = (array) => {
-    // Loop em todos os elementos
-    for (let index = array.length - 1; index > 0; index -= 1) {
-      // Escolhendo elemento aleatório
-      const shuffle = Math.floor(Math.random() * (index + 1));
-      // Reposicionando elemento
-      [array[index], array[shuffle]] = [array[shuffle], array[index]];
-    }
-    // Retornando array com aleatoriedade
-    return array;
-  };
-
   // retorna um array com as respostas embaralhadas
   answers = () => {
     const { data, index } = this.state;
@@ -94,22 +110,12 @@ class Game extends React.Component {
       const wrongAnswers = results[index]?.incorrect_answers;
       const correctAnswers = results[index]?.correct_answer;
       const allAnswers = [...wrongAnswers, correctAnswers];
-      const shuffle = this.shuffleArray(allAnswers);
+      const shuffle = shuffleArray(allAnswers);
       this.setState({
         shuffle,
       });
     }
     return [];
-  };
-
-  nextQuestion = () => {
-    this.setState((prevState) => ({
-      index: prevState.index + 1,
-      time: 30,
-      disabled: false,
-    }), () => this.answers());
-
-    this.timeOut();
   };
 
   score = ({ innerText }) => {
@@ -124,18 +130,7 @@ class Game extends React.Component {
     }
   };
 
-  // verifica se o token expirou e redireciona para a pagina de login caso tenha expirado
-  verifyToken = () => {
-    const { history } = this.props;
-    const { data } = this.state;
-
-    const three = 3;
-
-    if (data.response_code === three) {
-      localStorage.removeItem('token');
-      history.push('/');
-    }
-  };
+  //  verica se a resposta está correta e atualiza o estado com a resposta
 
   render() {
     const { data, index, time, disabled, shuffle, isAnswered } = this.state;
@@ -173,7 +168,7 @@ class Game extends React.Component {
                       <button
                         type="button"
                         data-testid="btn-next"
-                        onClick={ this.nextQuestion }
+                        onClick={ this.handleNextQuestion }
                         className="btn-next"
                         disabled={ !isAnswered }
                       >

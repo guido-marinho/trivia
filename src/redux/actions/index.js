@@ -21,3 +21,9 @@ export const getScore = (score) => ({
   type: 'GET_SCORE',
   score,
 });
+
+// action para contar o número de acertos no estado global
+export const getAssertions = (assertions) => ({
+  type: 'GET_ASSERTIONS',
+  assertions,
+});
