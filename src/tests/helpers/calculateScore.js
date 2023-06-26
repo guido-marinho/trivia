@@ -1,7 +1,5 @@
-
 // função para calcular o score
 export const  calculateScore = (time, difficulty) => {
-  let score;
   const valuePerHit = 10;
 
   if (difficulty === 'hard') {

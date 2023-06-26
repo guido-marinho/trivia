@@ -122,7 +122,6 @@ class Game extends React.Component {
     const { data, index, time } = this.state;
     const { results } = data;
     const { dispatch } = this.props;
-    console.log(time);
     if (results[index]?.correct_answer === innerText) {
       dispatch(
         getScore(calculateScore(Number(time), results[index].difficulty.toString())),

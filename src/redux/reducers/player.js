@@ -13,9 +13,10 @@ export const player = (state = initialState, action) => {
   case 'GET_EMAIL':
     return { ...state, email: action.email };
   case 'GET_SCORE':
-    return { ...state, score: action.score + state.score };
-  case 'GET_ASSERTIONS':
-    return { ...state, assertions: action.assertions + state.assertions };
+    return { ...state,
+      score: action.score + state.score,
+      assertions: state.assertions + 1 };
+
   default:
     return state;
   }
