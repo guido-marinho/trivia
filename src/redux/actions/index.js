@@ -15,3 +15,9 @@ export const getEmail = (email) => ({
   type: 'GET_EMAIL',
   email,
 });
+
+// action para somar o score no estado global
+export const getScore = (score) => ({
+  type: 'GET_SCORE',
+  score,
+});

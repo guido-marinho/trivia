@@ -12,6 +12,8 @@ export const user = (state = initialState, action) => {
     return { ...state, name: action.name };
   case 'GET_EMAIL':
     return { ...state, email: action.email };
+  case 'GET_SCORE':
+    return { ...state, score: action.score + state.score };
   default:
     return state;
   }
