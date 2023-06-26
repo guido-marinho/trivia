@@ -7,11 +7,11 @@ import { calculateAssertions } from '../tests/helpers/calculateAssertions';
 class Feedback extends Component {
   handleClick = () => {
     const { history } = this.props;
-    history.push('/game');
+    history.push('/');
   };
 
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, history } = this.props;
     return (
       <div>
         <h1 data-testid="feedback-text">{ calculateAssertions(assertions) }</h1>
@@ -26,6 +26,12 @@ class Feedback extends Component {
         >
           Play Again
 
+        </button>
+        <button
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
         </button>
       </div>
     );
