@@ -149,12 +149,7 @@ class Game extends React.Component {
               <main className="main-container">
                 <div className="answer-container">
                   <div className="answer-category">
-                    <h2
-                      data-testid="question-category"
-                    >
-                      { results[index]?.category }
-
-                    </h2>
+                    <h2 data-testid="question-category">{ results[index]?.category }</h2>
                   </div>
                   <h3
                     data-testid="question-text"
