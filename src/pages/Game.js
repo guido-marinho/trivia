@@ -69,6 +69,7 @@ class Game extends React.Component {
       index: prevState.index + 1,
       time: 30,
       disabled: false,
+      isAnswered: false,
     }), () => this.answers());
 
     this.timeOut();
@@ -157,8 +158,8 @@ class Game extends React.Component {
                       disabled={ disabled }
                       data-testid={ answer === results[index]?.correct_answer
                         ? 'correct-answer' : `wrong-answer-${curr}` }
-                      className={ answer === results[index]?.correct_answer
-                        ? 'correct' : 'wrong' }
+                      className={ isAnswered && (answer === results[index]?.correct_answer
+                        ? 'correct' : 'wrong') }
                     >
                       { answer }
                     </button>

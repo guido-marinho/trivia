@@ -9,7 +9,7 @@ const initialState = {
 export const player = (state = initialState, action) => {
   switch (action.type) {
   case 'GET_NAME':
-    return { ...state, name: action.name };
+    return { ...state, name: action.name, score: 0, assertions: 0 };
   case 'GET_EMAIL':
     return { ...state, email: action.email };
   case 'GET_SCORE':
