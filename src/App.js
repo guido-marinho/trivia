@@ -11,18 +11,18 @@ import Settings from './pages/Settings';
 
 export default function App() {
   return (
-    <Switch>
-      <Route path="/" component={ Login } exact />
-      <Route path="/settings" component={ Settings } />
-      <Route path="/feedback" component={ Feedback } />
-      <Route path="/game" component={ Game } />
-      <Route path="/ranking" component={ Ranking } />
-    </Switch>
-  /* <div className="App">
-      <header className="App-header">
+    <div className="App">
+      {/* <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <p>SUA VEZ</p>
-      </header>
-    </div> */
+      </header> */}
+      <Switch>
+        <Route path="/" component={ Login } exact />
+        <Route path="/settings" component={ Settings } />
+        <Route path="/feedback" component={ Feedback } />
+        <Route path="/game" component={ Game } />
+        <Route path="/ranking" component={ Ranking } />
+      </Switch>
+    </div>
   );
 }
