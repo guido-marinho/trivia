@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../css/Login.css';
 import { fecthToken } from '../helpers/fetchApi';
+import confiIcon from '../img/configuração.png';
+import logoTrivia from '../img/logo-trivia.png';
 import { getEmail, getName } from '../redux/actions';
 
 class Login extends Component {
@@ -42,44 +45,49 @@ class Login extends Component {
     const { name, email } = this.state;
     const { history } = this.props;
     return (
-      <div>
-        <form>
-          <label htmlFor="name">
-            <input
-              type="text"
-              value={ name }
-              name="name"
-              id="name"
-              data-testid="input-player-name"
-              onChange={ this.handleChange }
-              placeholder="Digite seu nome"
-            />
-          </label>
-          <label htmlFor="email">
-            <input
-              type="text"
-              value={ email }
-              name="email"
-              id="email"
-              data-testid="input-gravatar-email"
-              onChange={ this.handleChange }
-              placeholder="Digite seu email"
-            />
-          </label>
-          <button
-            data-testid="btn-play"
-            disabled={ this.isDisable() }
-            onClick={ this.handleSubmit }
-          >
-            Play
-          </button>
-        </form>
-        <button
-          data-testid="btn-settings"
-          onClick={ () => history.push('/settings') }
-        >
-          Settings
-        </button>
+      <div className="login-container">
+        <img src={ logoTrivia } alt="logo-trivia" className="logo-trivia" />
+        <div className="login-forms">
+          <form>
+            <label htmlFor="name">
+              <input
+                type="text"
+                value={ name }
+                name="name"
+                id="name"
+                data-testid="input-player-name"
+                onChange={ this.handleChange }
+                placeholder="Qual seu nome?"
+              />
+            </label>
+            <label htmlFor="email">
+              <input
+                type="text"
+                value={ email }
+                name="email"
+                id="email"
+                data-testid="input-gravatar-email"
+                onChange={ this.handleChange }
+                placeholder="Qual seu e-mail do gravatar?"
+              />
+            </label>
+            <button
+              data-testid="btn-play"
+              disabled={ this.isDisable() }
+              onClick={ this.handleSubmit }
+            >
+              Play
+            </button>
+            <button
+              data-testid="btn-settings"
+              onClick={ () => history.push('/settings') }
+              className="config-button"
+            >
+              <img src={ confiIcon } alt="icon" className="config-icon" />
+              Settings
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
