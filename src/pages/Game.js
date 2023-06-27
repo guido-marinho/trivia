@@ -10,6 +10,7 @@ import '../css/Game.css';
 import { calculateScore } from '../helpers/calculateScore';
 import { fetchAnswers } from '../helpers/fetchApi';
 import { shuffleArray } from '../helpers/shuffleArray';
+import timerIcon from '../img/timer.png';
 import { getScore } from '../redux/actions';
 
 class Game extends React.Component {
@@ -145,11 +146,31 @@ class Game extends React.Component {
               <header>
                 <Header />
               </header>
-              <main>
-                <span>{ time }</span>
-                <h2 data-testid="question-category">{ results[index]?.category }</h2>
-                <h3 data-testid="question-text">{ results[index]?.question }</h3>
-                <div data-testid="answer-options">
+              <main className="main-container">
+                <div className="answer-container">
+                  <div className="answer-category">
+                    <h2
+                      data-testid="question-category"
+                    >
+                      { results[index]?.category }
+
+                    </h2>
+                  </div>
+                  <h3
+                    data-testid="question-text"
+                    className="question"
+                  >
+                    { results[index]?.question }
+
+                  </h3>
+                  <span className="timer">
+                    <img src={ timerIcon } alt="timer-icon" />
+                    Tempo:
+                    {' '}
+                    { time }
+                  </span>
+                </div>
+                <div data-testid="answer-options" className="answer-options">
                   { shuffle.map((answer, curr) => (
                     <button
                       type="button"
@@ -159,7 +180,8 @@ class Game extends React.Component {
                       data-testid={ answer === results[index]?.correct_answer
                         ? 'correct-answer' : `wrong-answer-${curr}` }
                       className={ isAnswered && (answer === results[index]?.correct_answer
-                        ? 'correct' : 'wrong') }
+                        ? 'correct ' : 'wrong ') }
+                      id="btn-answer"
                     >
                       { answer }
                     </button>
