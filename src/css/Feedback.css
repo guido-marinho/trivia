@@ -1,0 +1,60 @@
+.feedback-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.trivia-feedback {
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
+.feedback-user-container {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  color: wihte;
+  display: flex;
+  flex-direction: column;
+  height: 278px;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  margin-top: 100px;
+  position: relative;
+  width: 439px;
+}
+
+.img-profile-feedback {
+  border: 5px solid rgba(234, 93, 93, 1);
+  border-radius: 50%;
+  height: 153px;
+  left: 140px;
+  position: absolute;
+  top: -85px;
+  width: 153px;
+}
+
+.feedback-perfomance {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.btn-play-again {
+  background-color: rgba(0, 213, 226, 1);
+  border-radius: 5px;
+  color: white;
+  height: 30px;
+  width: 200px;
+}
+
+.btn-ranking {
+  background-color: rgba(53, 144, 111, 1);
+  border-radius: 5px;
+  color: white;
+  height: 30px;
+  margin-top: 10px;
+  width: 200px;
+}

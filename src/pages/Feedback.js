@@ -1,8 +1,10 @@
+import { MD5 } from 'crypto-js';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import '../css/Feedback.css';
 import { calculateAssertions } from '../helpers/calculateAssertions';
+import logoTrivia from '../img/logo-trivia.png';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -31,28 +33,57 @@ class Feedback extends Component {
   };
 
   render() {
-    const { assertions, score, history } = this.props;
-    return (
-      <div>
-        <h1 data-testid="feedback-text">{ calculateAssertions(assertions) }</h1>
-        <Header />
-        <div>
-          <p data-testid="feedback-total-question">{ assertions }</p>
-          <p data-testid="feedback-total-score">{ score }</p>
-        </div>
-        <button
-          data-testid="btn-play-again"
-          onClick={ this.handleClick }
-        >
-          Play Again
+    const { assertions, score, email, history } = this.props;
+    const hash = MD5(email).toString();
+    const URL_ICON = `https://www.gravatar.com/avatar/${hash}`;
 
-        </button>
-        <button
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
-        </button>
+    return (
+      <div className="feedback-container">
+        <img src={ logoTrivia } alt="logo-trivia" className="trivia-feedback" />
+        <div className="feedback-user-container">
+          <div className="feddback-user">
+            <img
+              src={ URL_ICON }
+              alt="icon"
+              data-testid="header-profile-picture"
+              className="img-profile-feedback"
+            />
+          </div>
+          <div className="feedback-perfomance">
+            <h1 data-testid="feedback-text">{ calculateAssertions(assertions) }</h1>
+            <div>
+              <p
+                data-testid="feedback-total-question"
+              >
+                { `Você acertou ${assertions} questões!` }
+
+              </p>
+              <p
+                data-testid="feedback-total-score"
+              >
+                { `Um total de ${score} pontos` }
+
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="feedback-buttons">
+          <button
+            data-testid="btn-play-again"
+            onClick={ this.handleClick }
+            className="btn-play-again"
+          >
+            Play Again
+
+          </button>
+          <button
+            data-testid="btn-ranking"
+            onClick={ () => history.push('/ranking') }
+            className="btn-ranking"
+          >
+            Ranking
+          </button>
+        </div>
       </div>
     );
   }
