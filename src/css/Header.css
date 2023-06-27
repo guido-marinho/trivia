@@ -1,0 +1,41 @@
+.header-container {
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: 113px;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.trivia-header {
+  height: 221px;
+  left: 221px;
+  position: absolute;
+  top: 19px;
+  width: 197px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 113px;
+  justify-content: space-around;
+  width: 400px;
+}
+
+.user-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.user-header img {
+  border-radius: 50%;
+  height: 40px;
+  margin-right: 10px;
+  width: 40px;
+}
